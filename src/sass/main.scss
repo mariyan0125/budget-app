@@ -1,0 +1,323 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+/*************************
+// COLORS
+**************************/
+$color-grey-dark: #777;
+$color-grey-light: #e7e7e7;
+$color-white: #fff;
+$color-black: #000;
+$color-red: #F42929;
+$color-green: #13BE23;
+ 
+/*************************
+// MIXINS
+**************************/
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+   @media only screen and (max-width: 37.5em) { @content }; //600px
+  }
+  @if $breakpoint == tab-port {
+   @media only screen and (max-width: 56.25em) { @content }; //900px
+  }
+  @if $breakpoint == tab-land {
+   @media only screen and (max-width: 75em) { @content }; //1200px
+  }
+  @if $breakpoint == big-desktop {
+   @media only screen and (min-width: 112.5em) { @content }; //1800px
+  }
+ }
+ 
+ @mixin borderShadow {
+  border-radius: .5rem;
+  border: 1px solid $color-grey-light;
+  box-shadow: .5rem .5rem .7rem #c4c4c4,
+             -.3rem -.5rem .8rem $color-white;
+ }
+
+/*************************
+// UTILITIES
+**************************/
+.plus {
+  color: $color-green;
+}
+.minus {
+  color: $color-red;
+}
+
+/*************************
+// GENERAL
+**************************/
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+ font-size: 62.5%; //1rem = 10px
+  @include respond(tab-land) { //width < 1200px?
+    font-size: 56.25%; //1rem = 9px, 9/16 = 56.25%
+  }
+
+  @include respond(tab-port) { //width < 900px?
+    font-size: 50%;// 1rem = 8px, 8/16 = 50%
+  }
+
+  @include respond(big-desktop) {
+    font-size: 75%; // 1rem = 12px, 12/16 = 75%
+  }
+}
+
+body {
+box-sizing: border-box;
+font-family: 'Lato', sans-serif;
+font-size: 1.6rem;
+min-height: 100vh;
+color: $color-grey-dark;
+
+  @include respond(phone) {
+    overflow-x: hidden;
+  }
+}
+
+.App {
+  width: 70vw;
+  background-color: #e9e8e8;
+  margin: 10rem auto;
+  
+  @include respond(phone) {
+    width: 100vw;
+    margin: 0;
+  }
+}
+
+/*************************
+// HEADER
+**************************/
+.header {
+  text-align: center;
+  height: 35rem;
+  background-image: linear-gradient(225deg, 
+  rgba(#FF3CAC, .7) 0%, 
+  rgba(#784BA0, .9) 50%, 
+  rgba(#2B86C5,.7) 100%), 
+  url(/img/bg-1.jpg);
+
+  background-position: center;
+  background-size: cover;
+  color: $color-grey-light;
+  
+  &__heading-primary {
+    padding-top: 5rem;
+    font-weight: 400;    
+  } 
+}
+/*************************
+// BALANCE
+**************************/
+.balance {
+  padding: 2rem;
+  letter-spacing: .1rem;  
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 1.6rem;
+  span {
+    display: block;
+    letter-spacing: .2rem;  
+    margin: 1rem;
+    font-size: 3rem;
+  }
+}
+/*************************
+// TOTAL INCOME EXPENSES
+**************************/
+.inc-exp {
+  background-color: $color-white;
+  color: $color-grey-dark; 
+  width: 35%;
+  margin: 3rem auto;
+  padding: 1rem 2rem;
+  border-radius: .3rem;
+  display: flex;
+
+  @include respond(phone) {
+     width: 100%;
+  }
+
+  .heading {
+    margin-bottom: 1rem;
+  }
+
+  &__income, &__expenses {
+    flex: 1 1 auto;  
+  }
+  &__income {
+    border-right: 1px solid $color-grey-light;
+  }
+}
+
+/*************************
+// ADD TRANSACTION FORM
+**************************/
+.add-transaction {
+  background-color: $color-grey-light;
+  padding: 1.4rem;
+  border-bottom: 1px solid $color-white;
+  
+  .add-form {
+    margin: 0 auto;
+    text-align: center;
+    
+    &__type {
+      @include borderShadow;
+      width: 5rem;
+      height: 4rem;  
+      font-size: 1.8rem;
+      color: inherit;
+      margin-right: 1rem;
+      font-weight: 300;
+      transition: border 0.3s;
+    }
+
+    &__description,
+    &__value {
+      @include borderShadow;
+      color: inherit;
+      font-family: inherit;
+      font-size: 1.4rem;
+      padding: 1.2rem 1.5rem;
+      margin-right: 1rem;
+      transition: border 0.3s;
+    }
+
+    &__value {
+      @include respond(phone) {
+        margin: 2rem 0 0;
+      }
+    }
+
+   &__btn {
+    @include borderShadow;
+      font-size: 1.4rem;
+      font-weight: bolder;
+      text-transform: uppercase;
+      letter-spacing: .03rem;
+      color: $color-green;
+      cursor: pointer;
+      display: inline-block;
+      background-color: #fffefe8f;
+      margin-left: 1rem;
+      padding: 1.2rem 1.5rem;
+
+      @include respond(phone) {
+       margin: 2rem;
+     }
+
+      &:active { transform: translateY(2px); }
+      &:focus { outline: none; }
+      &:hover {
+        background-image: linear-gradient(145deg, #dfdfdf, #ffffff);
+        box-shadow:  .4rem .5rem .8rem #dfdfdf, 
+                    -.4rem -.5rem .8rem $color-white;
+      }
+    }
+  }
+}
+
+//Changing border color depending on the transaction type (positive or negative)
+.add-form__type:focus.positive,
+.add-form__description:focus.positive,
+.add-form__value:focus.positive {
+      outline: none;
+      border: 1px solid $color-green;
+}
+.add-form__type:focus.negative,
+.add-form__description:focus.negative,
+.add-form__value:focus.negative {
+      outline: none;
+      border: 1px solid $color-red;
+}
+.add-form__btn.negative {
+  color: $color-red;
+}
+////////////////////////////////////////////////////////////////////////
+
+/*************************
+// DELETE BTN
+**************************/
+.delete-btn {
+  @include borderShadow;
+  padding: .6rem 1.2rem;
+  margin-left: 2rem;
+  color: $color-red;
+  background-color: #fffefe8f;
+  font-weight: bolder;
+  cursor: pointer;
+  opacity: 0;
+  transition: all .3s ease;
+
+  @include respond(tab-port) {
+    opacity: 1;
+  }
+
+  &:hover {
+    background-image: linear-gradient(145deg, #d0d0d0, #f7f7f7);
+    box-shadow:  .6rem .6rem 1rem #c4c4c4, 
+                -.8rem -.8rem 1.5rem $color-white;
+  }
+
+}
+/*************************
+// TRANSITION LIST
+**************************/
+.transaction-list {
+  margin: 3rem;
+  display: flex;
+  justify-content: space-around;
+
+  @include respond(phone) {
+    flex-wrap: wrap;
+  }
+  
+  .income__title, .expenses__title {
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 1.8rem;
+    letter-spacing: .1rem;
+    margin-bottom: 2rem;
+  }
+
+  .expenses__title {
+    @include respond(phone) {
+      margin-top: 3rem;
+    }
+  }
+
+  .income__list, .expenses__list {
+    list-style: none;
+  }
+
+  .income, .expenses {
+    width: 100%;
+  }
+
+  .income {
+    margin-right: 3rem;
+    
+    @include respond(phone) {
+      margin-right: 0;
+    }
+  }
+
+  .item {
+    padding: 1rem 0;
+    border-bottom: 1px solid $color-white;
+    display: flex;
+    justify-content: space-between;
+    
+    &:hover  .delete-btn {
+      opacity: 1
+    }
+  }
+}
