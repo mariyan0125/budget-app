@@ -2,7 +2,7 @@
 **Budget app built with React Hooks and React Context API**
 - React Hooks
 - React Context API
-- SAAS
+- Scss
 - Responsive Design
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
